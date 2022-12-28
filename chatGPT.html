@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat GPT</title>
+</head>
+<body>
+    <form id="chat-form">
+        <input type="text" id="chat-input" />
+        <button type="submit">Envoyer</button>
+    </form>
+
+    <div id="chat-response"></div>
+
+
+    <script>
+
+        document.getElementById('chat-form').addEventListener('submit', event => {
+        event.preventDefault();
+
+        const input = document.getElementById('chat-input').value;
+        const responseDiv = document.getElementById('chat-response');
+
+        fetch('https://api.openai.com/v1/chatGPT', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer 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',
+            },
+            body: JSON.stringify({
+            prompt: input,
+            max_tokens: 2048,
+            }),
+        }).then(response => response.json())
+            .then(data => {
+            responseDiv.innerText = data.response;
+            });
+        });
+
+
+
+    </script>
+</body>
+</html>
